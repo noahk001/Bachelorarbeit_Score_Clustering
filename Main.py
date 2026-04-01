@@ -1,7 +1,7 @@
 from calculations import load_and_clean_data, attainment_analysis, run_timing_analysis, attainment_analysis_slope
 
-FILE_IST = '/Users/noahkleinoder/Library/Mobile Documents/com~apple~CloudDocs/Persönliche Unterlagen /Studium/Bachelor DGM/Bachelorarbeit/Bachelorarbeit Noah Kleinöder/data_time.csv'
-FILE_SOLL = '/Users/noahkleinoder/Library/Mobile Documents/com~apple~CloudDocs/Persönliche Unterlagen /Studium/Bachelor DGM/Bachelorarbeit/Bachelorarbeit Noah Kleinöder/data_soll.csv'
+FILE_IST = 'data_time.csv'
+FILE_SOLL = 'data_soll.csv'
 TIME_COL = 'zeit_min_sec'
 
 ATTAINMENT_TASKS = [
