@@ -3,7 +3,7 @@ import glob
 import os
 from functools import reduce
 
-INPUT_FOLDER = '/Users/noahkleinoder/Library/Mobile Documents/com~apple~CloudDocs/Persönliche Unterlagen /Studium/Bachelor DGM/Bachelorarbeit/Bachelorarbeit Noah Kleinöder/Ergebnisse_nach_Feedback'
+INPUT_FOLDER = 'Ergebnisse_nach_Feedback'
 OUTPUT_FILE = "Gesamtscore_Alle_Files_Neu.csv"
 
 def run_folder_aggregation():
