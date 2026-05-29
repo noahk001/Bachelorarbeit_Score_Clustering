@@ -1,0 +1,19 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file = 'Gesamtscore_Alle_Files.csv' #hier overall score datei einfügen
+
+def create_score_boxplots(csv_file):
+    # 1. Datei laden
+    df = pd.read_csv(file, sep=';', decimal=',')
+    score_cols = [c for c in df.columns if c != 'ID']
+    df[score_cols].boxplot()
+    plt.title('Verteilung der Einzelscores und Gesamtscore')
+    plt.ylabel('Score-Wert ($0.0$ bis $1.0$)')
+    plt.ylim(-0.05, 1.05)
+    plt.xticks(rotation=45, ha='right', fontsize=8)
+    plt.tight_layout()
+    plt.savefig('Boxplot_Score_Verteilung.png')
+    print("Grafik wurde als 'Boxplot_Score_Verteilung.png' gespeichert.")
+
+create_score_boxplots('Master_Scores.csv')
