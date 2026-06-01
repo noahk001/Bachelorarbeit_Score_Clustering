@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 file = 'Gesamtscore_Alle_Files.csv' #hier overall score datei einfügen
 
 def create_score_boxplots(csv_file):
-    # 1. Datei laden
     df = pd.read_csv(file, sep=';', decimal=',')
     score_cols = [c for c in df.columns if c != 'ID']
     df[score_cols].boxplot()
