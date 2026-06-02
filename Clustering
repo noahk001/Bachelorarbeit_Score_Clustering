@@ -8,7 +8,7 @@ from sklearn.cluster import AgglomerativeClustering
 file = 'Medical_data'
 
 def run_patient_clustering(file_path, output_file, n_clusters=4):
-    df = pd.read_csv(file_path, sep=';', decimal=',', skiprows=1)
+    df = pd.read_csv(file_path, sep=';', decimal=',')
 
     ids = df['id']
     X = df.drop(columns=['id'])
