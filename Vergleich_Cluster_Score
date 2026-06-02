@@ -1,0 +1,42 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import os
+
+def merge_and_visualize(score_file, cluster_file, output_csv, output_img):
+    df_scores = pd.read_csv(score_file, sep=';', decimal=',')
+    df_clusters = pd.read_csv(cluster_file, sep=';', decimal=',')
+    df_scores.columns = [c.upper() for c in df_scores.columns]
+    df_clusters.columns = [c.upper() for c in df_clusters.columns]
+    merged_df = pd.merge(
+        df_scores[['ID', 'GESAMTSCORE']],
+        df_clusters[['ID', 'CLUSTER']],
+        on='ID',
+        how='inner'
+    )
+
+    merged_df.to_csv(output_csv, sep=';', decimal=',', index=False)
+    print(f"CSV erfolgreich gespeichert: {output_csv}")
+
+    plt.figure(figsize=(10, 6))
+    sns.boxplot(x='CLUSTER', y='GESAMTSCORE', data=merged_df, hue='CLUSTER', palette='Set2', legend=False)
+    sns.stripplot(x='CLUSTER', y='GESAMTSCORE', data=merged_df, color='black', alpha=0.3)
+
+    plt.title('Vergleich des Gesamtscores nach Cluster-Zugehörigkeit', fontsize=14, fontweight='bold')
+    plt.xlabel('Cluster ID', fontsize=12)
+    plt.ylabel('Gesamtscore ($0.0$ bis $1.0$)', fontsize=12)
+    plt.ylim(-0.05, 1.05)
+    plt.grid(axis='y', linestyle='--', alpha=0.6)
+
+    plt.tight_layout()
+    plt.savefig(output_img, dpi=300)
+    print(f"Grafik erfolgreich gespeichert: {output_img}")
+    print("\n--- Durchschnittliche Scores pro Cluster ---")
+    print(merged_df.groupby('CLUSTER')['GESAMTSCORE'].mean())
+
+
+score_path = Gesamtscore_Alle_Files.csv'
+cluster_path = Cluster.csv
+
+
+merge_and_visualize(score_path, cluster_path, 'Scores_mit_Clustern.csv', 'Boxplot_Score_vs_Cluster_neu.png')
