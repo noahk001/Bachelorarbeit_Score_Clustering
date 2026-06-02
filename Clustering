@@ -9,7 +9,7 @@ file = 'Medical_data'
 
 def run_patient_clustering(file_path, output_file, n_clusters=4):
     df = pd.read_csv(file_path, sep=';', decimal=',')
-
+    df.columns = [str(c).lower().strip() for c in df.columns]
     ids = df['id']
     X = df.drop(columns=['id'])
     scaler = StandardScaler()
