@@ -6,13 +6,37 @@ file = 'Gesamtscore_Alle_Files.csv' #hier overall score datei einfügen
 def create_score_boxplots(csv_file):
     df = pd.read_csv(file, sep=';', decimal=',')
     score_cols = [c for c in df.columns if c != 'ID']
-    df[score_cols].boxplot()
-    plt.title('Verteilung der Einzelscores und Gesamtscore')
-    plt.ylabel('Score-Wert ($0.0$ bis $1.0$)')
-    plt.ylim(-0.05, 1.05)
+    total_idx = [i for i, c in enumerate(score_cols) if 'esamt' in c or 'total' in c.lower()][0]
+    fig, ax = plt.subplots()
+    bp = ax.boxplot(
+        [df[c].dropna() for c in score_cols],
+        tick_labels=score_cols,
+        showmeans=True,
+        meanline=True,
+        meanprops=dict(color='red', linestyle='--', linewidth=1.2),
+        medianprops=dict(color='green', linewidth=1.2),
+        flierprops=dict(marker='o', markersize=4)
+    )
+    lw = 2.5
+    bp['boxes'][total_idx].set_linewidth(lw)
+    bp['medians'][total_idx].set_linewidth(lw)
+    bp['means'][total_idx].set_linewidth(lw)
+    for j in (2 * total_idx, 2 * total_idx + 1):
+        bp['whiskers'][j].set_linewidth(lw)
+        bp['caps'][j].set_linewidth(lw)
+    ax.set_title('Verteilung der Einzelscores und Gesamtscore')
+    ax.set_ylabel('Score-Wert ($0.0$ bis $1.0$)')
+    ax.set_ylim(-0.05, 1.05)
+    ax.grid(True, linestyle='-', alpha=0.4)
     plt.xticks(rotation=45, ha='right', fontsize=8)
+
+    ax.get_xticklabels()[total_idx].set_fontweight('bold')
+    ax.legend(handles=[
+        Line2D([0], [0], color='green', linewidth=1.2, label='Median'),
+        Line2D([0], [0], color='red', linestyle='--', linewidth=1.2, label='Arithmetisches Mittel'),
+    ], loc='lower left', fontsize=8)
     plt.tight_layout()
-    plt.savefig('Boxplot_Score_Verteilung.png')
-    print("Grafik wurde als 'Boxplot_Score_Verteilung.png' gespeichert.")
+    plt.savefig('Boxplot_Score_Verteilung_neu.png', dpi=300)
+    print("Grafik wurde als 'Boxplot_Score_Verteilung_neu.png' gespeichert.")
 
 create_score_boxplots('Master_Scores.csv')
