@@ -31,8 +31,8 @@ def merge_and_visualize(score_file, cluster_file, output_csv, output_img):
     plt.tight_layout()
     plt.savefig(output_img, dpi=300)
     print(f"Grafik erfolgreich gespeichert: {output_img}")
-    print("\n--- Durchschnittliche Scores pro Cluster ---")
-    print(merged_df.groupby('CLUSTER')['GESAMTSCORE'].mean())
+    print("\n--- Median der Scores pro Cluster ---")
+    print(merged_df.groupby('CLUSTER')['GESAMTSCORE'].median())
 
 
 score_path = Gesamtscore_Alle_Files.csv'
